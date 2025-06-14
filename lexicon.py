@@ -1,29 +1,43 @@
 import ply.lex as lex
+# Dictionary of reserved words
+reserved = {'let': 'LET',
+            'const': 'CONST',
+            'var': 'VAR',
+            'if': 'IF',
+            'else':'ELSE',
+            'while': 'WHILE',
+            'for': 'FOR',
+            'break': 'BREAK',
+            'function': 'FUNCTION',
+            'return': 'RETURN',
+            'type': 'TYPE',
+            'interface': 'INTERFACE',
+            'number': 'NUMBER',
+            'string': 'STRING',
+            'boolean': 'BOOLEAN',
+            'any': 'ANY'
+            }
 # List of token names
 tokens = [
     'IDENTIFIER',
     'NUMBER',
     'STRING',
-    'PLUS', 'MINUS', 'TIMES', 'DIVIDE',
+    'PLUS', 'MINUS', 'TIMES', 'DIVIDE', 'MODULE',
     'EQUALS', 'EQEQ', 'NOTEQ',
     'LT', 'GT', 'LE', 'GE',
     'LPAREN', 'RPAREN',
     'LBRACE', 'RBRACE',
+    'LBRACKET', 'RBRACKET',
     'SEMICOLON', 'COLON', 'COMMA',
     'ARROW'
-] + [
-    'LET', 'CONST', 'VAR',
-    'IF', 'ELSE',
-    'FUNCTION', 'RETURN',
-    'TYPE', 'INTERFACE',
-    'NUMBER_TYPE', 'STRING_TYPE', 'BOOLEAN_TYPE', 'ANY_TYPE'
-]
+] + list(reserved.values())
 
 # Regular expression rules for simple tokens
 t_PLUS = r'\+'
 t_MINUS = r'-'
 t_TIMES = r'\*'
 t_DIVIDE = r'/'
+t_MODULE = r'%'
 t_EQUALS = r'='
 t_EQEQ = r'=='
 t_NOTEQ = r'!='
@@ -35,6 +49,8 @@ t_LPAREN = r'\('
 t_RPAREN = r'\)'
 t_LBRACE = r'\{'
 t_RBRACE = r'\}'
+t_LBRACKET = r'\['
+t_RBRACKET = r'\]'
 t_SEMICOLON = r';'
 t_COLON = r':'
 t_COMMA = r','
@@ -45,8 +61,11 @@ def t_IDENTIFIER(t):
     t.type = reserved.get(t.value, 'IDENTIFIER')  # Check for reserved words
     return t
 def t_NUMBER(t):
-    r'\d+'
-    t.value = int(t.value)  # Convert to integer
+    r'(\d+\.\d*|\.\d+|\d+)'
+    if '.' in t.value:
+        t.value = float(t.value)
+    else:    
+        t.value = int(t.value)
     return t
 def t_STRING(t):
     r'"([^"\\]*(\\.[^"\\]*)*)"'
@@ -67,7 +86,7 @@ lexer = lex.lex()
 
 # Test it out
 data = '''
-3 + 4 * 10
+3 + 4 * 10.3
   + -20 *2
 '''
 # ---------------------------------- Test the lexer with some input--------------------------------
