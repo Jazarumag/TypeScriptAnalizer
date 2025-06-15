@@ -12,8 +12,6 @@ reserved = {'let': 'LET',
             'return': 'RETURN',
             'type': 'TYPE',
             'interface': 'INTERFACE',
-            'number': 'NUMBER',
-            'string': 'STRING',
             'boolean': 'BOOLEAN',
             'any': 'ANY'
             }
@@ -29,7 +27,8 @@ tokens = [
     'LBRACE', 'RBRACE',
     'LBRACKET', 'RBRACKET',
     'SEMICOLON', 'COLON', 'COMMA',
-    'ARROW'
+    'ARROW', 'DOT', 'BACKTICK', 'DOLLAR', 'QUESTION',
+    'OROR', 'AND', 'NOT', 'PIPE'
 ] + list(reserved.values())
 
 # Regular expression rules for simple tokens
@@ -55,6 +54,14 @@ t_SEMICOLON = r';'
 t_COLON = r':'
 t_COMMA = r','
 t_ARROW = r'=>'
+t_DOT = r'\.'
+t_BACKTICK = r'`'
+t_DOLLAR = r'\$'
+t_QUESTION = r'\?'
+t_OROR = r'\|\|'
+t_AND = r'&&'
+t_NOT = r'!'
+t_PIPE = r'\|'
 
 def t_IDENTIFIER(t):
     r'[a-zA-Z_][a-zA-Z0-9_]*'
@@ -85,13 +92,37 @@ def t_error(t):
 lexer = lex.lex()
 
 # Test it out
-file_test = open('algoritmo-3.ts', 'r')
+
+print("Selecciona el algoritmo a analizar:")
+print("1. algoritmo-1.ts")
+print("2. algoritmo-2.ts")
+print("3. algoritmo-3.ts")
+alg_choice = input("Ingresa el número: ")
+if alg_choice not in ["1", "2", "3"]:
+    print("Seleccionando default: 'algoritmo-3.ts'")
+    alg_choice = "3"
+
+file_test = open(f"algoritmo-{alg_choice}.ts", "r")
 data = file_test.read()
 file_test.close()
 
 import time as time
 
-author = "joshua"
+print("Quién está probando:")
+print("1. joshua")
+print("2. emily")
+print("3. raul")
+author_choice = input("Ingresa el número: ")
+if author_choice == "1":
+    author = "joshua"
+elif author_choice == "2":
+    author = "emily"
+elif author_choice == "3":
+    author = "raul"
+else:
+    print("Seleccionando default: 'general'")
+    author = "general"
+
 date = time.strftime("%Y-%m-%d")
 hour = time.strftime("%HH%Mm%Ss")
 file = open(f'./logs/lexico-{author}-{date}-{hour}.txt', 'a')
