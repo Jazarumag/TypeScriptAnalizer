@@ -114,6 +114,8 @@ def t_newline(t):
 
 def t_error(t):
     print(f"Illegal character '{t.value[0]}' at line {t.lineno}")
+    if hasattr(t.lexer, 'logfile') and t.lexer.logfile:
+        t.lexer.logfile.write(f"ERROR: Illegal character '{t.value[0]}' at line {t.lineno}\n")
     t.lexer.skip(1)
 
 lexer = lex.lex()
@@ -158,6 +160,7 @@ if not os.path.exists('./logs'):
     os.makedirs('./logs')
 
 with open(file_name, 'a') as file:
+    lexer.logfile = file
     lexer.input(data)
     while True:
         tok = lexer.token()
