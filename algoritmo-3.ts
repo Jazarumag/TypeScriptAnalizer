@@ -32,7 +32,6 @@ const pruebaOperadores = () => {
     
     // Operadores de comparación
     let igual: boolean = (5 == 5);
-    let noIgual: boolean = (5 != 3);
     let mayorQue: boolean = (10 > 5);
     let menorQue: boolean = (3 < 8);
     

@@ -85,19 +85,16 @@ def t_error(t):
 lexer = lex.lex()
 
 # Test it out
-data = '''
-3 + 4 * 10.3
-  + -20 *2
-'''
-# ---------------------------------- Test the lexer with some input--------------------------------
+file_test = open('algoritmo-3.ts', 'r')
+data = file_test.read()
+file_test.close()
+
 import time as time
-# Give the lexer some input
 
 author = "joshua"
-date = time.strftime("%Y-%m-%d")  # Get current
-hour = time.strftime("%HH%Mm%Ss")  # Get current hour
+date = time.strftime("%Y-%m-%d")
+hour = time.strftime("%HH%Mm%Ss")
 file = open(f'./logs/lexico-{author}-{date}-{hour}.txt', 'a')
-
 
 lexer.input(data)
 
