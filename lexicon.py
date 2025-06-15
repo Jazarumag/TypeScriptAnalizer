@@ -26,11 +26,8 @@ reserved = {'let': 'LET',
             'interface': 'INTERFACE',
             'boolean': 'BOOLEAN',
             'any': 'ANY',
-<<<<<<< HEAD
-            'default': 'DEFAULT'
-=======
+            'default': 'DEFAULT',
             'char': 'CHAR'
->>>>>>> 4c1b234212b39c705e4f899ef21f5929fb674d5b
             }
 # List of token names
 tokens = [
