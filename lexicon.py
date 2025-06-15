@@ -7,13 +7,24 @@ reserved = {'let': 'LET',
             'else':'ELSE',
             'while': 'WHILE',
             'for': 'FOR',
+            'switch': 'SWITCH',
+            'case': 'CASE',
             'break': 'BREAK',
             'function': 'FUNCTION',
             'return': 'RETURN',
+            'void': 'VOID',
             'type': 'TYPE',
+            'typeof': 'TYPEOF',
+            'class': 'CLASS',
+            'this': 'THIS',
+            'constructor': 'CONSTRUCTOR',
+            'public': 'PUBLIC',
+            'private': 'PRIVATE',
+            'protected': 'PROTECTED',
             'interface': 'INTERFACE',
             'boolean': 'BOOLEAN',
-            'any': 'ANY'
+            'any': 'ANY',
+            'default': 'DEFAULT'
             }
 # List of token names
 tokens = [
