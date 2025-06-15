@@ -1,5 +1,7 @@
 import ply.lex as lex
-# Dictionary of reserved words
+import time
+
+# Diccionario de palabras reservadas
 reserved = {'let': 'LET',
             'const': 'CONST',
             'var': 'VAR',
@@ -13,14 +15,16 @@ reserved = {'let': 'LET',
             'type': 'TYPE',
             'interface': 'INTERFACE',
             'boolean': 'BOOLEAN',
-            'any': 'ANY'
+            'any': 'ANY',
+            'char': 'CHAR'
             }
 # List of token names
 tokens = [
     'IDENTIFIER',
     'NUMBER',
     'STRING',
-    'PLUS', 'MINUS', 'TIMES', 'DIVIDE', 'MODULE',
+    'CHARACTER',
+    'PLUS', 'MINUS', 'TIMES', 'DIVIDE', 'MODULE', 'POWER',
     'EQUALS', 'EQEQ', 'NOTEQ',
     'LT', 'GT', 'LE', 'GE',
     'LPAREN', 'RPAREN',
@@ -37,6 +41,7 @@ t_MINUS = r'-'
 t_TIMES = r'\*'
 t_DIVIDE = r'/'
 t_MODULE = r'%'
+t_POWER = r'\^'
 t_EQUALS = r'='
 t_EQEQ = r'=='
 t_NOTEQ = r'!='
@@ -67,6 +72,7 @@ def t_IDENTIFIER(t):
     r'[a-zA-Z_][a-zA-Z0-9_]*'
     t.type = reserved.get(t.value, 'IDENTIFIER')  # Check for reserved words
     return t
+
 def t_NUMBER(t):
     r'(\d+\.\d*|\.\d+|\d+)'
     if '.' in t.value:
@@ -74,66 +80,77 @@ def t_NUMBER(t):
     else:    
         t.value = int(t.value)
     return t
+
 def t_STRING(t):
     r'"([^"\\]*(\\.[^"\\]*)*)"'
     t.value = t.value[1:-1]  # Remove quotes
     return t
 
+def t_CHARACTER(t):
+    r"'([^'\\]*(\\.[^'\\]*)*)'"  # Reconoce caracteres entre comillas simples
+    t.value = t.value[1:-1]  # Eliminamos las comillas simples
+    return t
+
 t_ignore  = ' \t'
+
 def t_COMMENT(t):
     r'//.*'
     pass
+
 def t_newline(t):
     r'\n+'
     t.lexer.lineno += len(t.value)
+
 def t_error(t):
     print(f"Illegal character '{t.value[0]}' at line {t.lineno}")
     t.lexer.skip(1)
+
 lexer = lex.lex()
 
 # Test it out
+def elegir_algoritmo():
+    print("Selecciona el algoritmo a analizar:")
+    print("1. algoritmo-1.ts")
+    print("2. algoritmo-2.ts")
+    print("3. algoritmo-3.ts")
+    alg_choice = input("Ingresa el número: ")
+    if alg_choice not in ["1", "2", "3"]:
+        print("Seleccionando default: 'algoritmo-3.ts'")
+        alg_choice = "3"
+    return alg_choice
 
-print("Selecciona el algoritmo a analizar:")
-print("1. algoritmo-1.ts")
-print("2. algoritmo-2.ts")
-print("3. algoritmo-3.ts")
-alg_choice = input("Ingresa el número: ")
-if alg_choice not in ["1", "2", "3"]:
-    print("Seleccionando default: 'algoritmo-3.ts'")
-    alg_choice = "3"
+def elegir_autor():
+    print("¿Quién está probando:")
+    print("1. Joshua")
+    print("2. Emily")
+    print("3. Raul")
+    author_choice = input("Ingresa el número: ")
+    authors = {"1": "Joshua", "2": "Emily", "3": "Raul"}
+    return authors.get(author_choice, "general")
 
-file_test = open(f"algoritmo-{alg_choice}.ts", "r")
-data = file_test.read()
-file_test.close()
+alg_choice = elegir_algoritmo()
+author = elegir_autor()
 
-import time as time
-
-print("Quién está probando:")
-print("1. joshua")
-print("2. emily")
-print("3. raul")
-author_choice = input("Ingresa el número: ")
-if author_choice == "1":
-    author = "joshua"
-elif author_choice == "2":
-    author = "emily"
-elif author_choice == "3":
-    author = "raul"
-else:
-    print("Seleccionando default: 'general'")
-    author = "general"
+try:
+    with open(f"algoritmo-{alg_choice}.ts", "r") as file_test:
+        data = file_test.read()
+except FileNotFoundError:
+    print(f"El archivo algoritmo-{alg_choice}.ts no se encuentra en el directorio.")
+    exit()
 
 date = time.strftime("%Y-%m-%d")
 hour = time.strftime("%HH%Mm%Ss")
-file = open(f'./logs/lexico-{author}-{date}-{hour}.txt', 'a')
+file_name = f'./logs/lexico-{author}-{date}-{hour}.txt'
 
-lexer.input(data)
+import os
+if not os.path.exists('./logs'):
+    os.makedirs('./logs')
 
-# Tokenize
-while True:
-    tok = lexer.token()
-    if not tok: 
-        break      # No more input
-    print(tok)
-    file.write(str(tok) + '\n')
-file.close()
+with open(file_name, 'a') as file:
+    lexer.input(data)
+    while True:
+        tok = lexer.token()
+        if not tok:
+            break
+        print(tok)
+        file.write(str(tok) + '\n')
