@@ -24,10 +24,12 @@ reserved = {'let': 'LET',
             'private': 'PRIVATE',
             'protected': 'PROTECTED',
             'interface': 'INTERFACE',
-            'boolean': 'BOOLEAN',
+            'boolean': 'BOOLEAN_TYPE',
             'any': 'ANY',
             'default': 'DEFAULT',
-            'char': 'CHAR'
+            'char': 'CHAR_TYPE',
+            'number': 'NUMBER_TYPE', 
+            'string': 'STRING_TYPE'
             }
 # List of token names
 tokens = [
