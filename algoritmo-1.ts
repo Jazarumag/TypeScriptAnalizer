@@ -1,6 +1,6 @@
 
-
-// 1. Declaración de Variables y Tipos
+// Codigo de prueba de Raul Laurido
+// Declaración de Variables y Tipos
 let edad: number = 25;
 const nombre: string = "Ana";
 var activo: boolean = true;
@@ -10,15 +10,15 @@ let precio: number = 10.50;
 let numeros: number[] = [1, 2, 3];
 let usuario: { id: number; nombre: string } = { id: 1, nombre: "Pedro" };
 
-// 2. Expresiones Aritméticas y Asignaciones
+// Expresiones Aritméticas y Asignaciones
 let resultado: number = (edad + precio) * 2 - 5 / 2;
 resultado += 1;
 
-// 3. Expresiones Booleanas y Lógicas
+// Expresiones Booleanas y Lógicas
 let esMayor: boolean = (edad > 18) && activo;
 let esValido: boolean = (numeros.length !== 0) || !esMayor;
 
-// 4. Estructuras de Control
+// Estructuras de Control
 if (esMayor) { // Condición booleana
     console.log("Acceso permitido.");
 } else {
@@ -39,7 +39,7 @@ switch (opcion) {
         console.log("Opción no reconocida.");
 }
 
-// 5. Declaración y Uso de Funciones
+// Declaración y Uso de Funciones
 function sumar(a: number, b: number): number {
     return a + b; // Retorno compatible
 }
@@ -52,7 +52,7 @@ const mostrarInfo = (dato: string | number): void => { // Unión de tipos, void
     }
 };
 
-// 6. Clases y Objetos
+// Clases y Objetos
 class Producto {
     nombre: string;
     private _stock: number; // Propiedad privada
