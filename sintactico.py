@@ -19,6 +19,8 @@ def p_statement(p):
                     | if_statement
                     | print
                     | input
+                    | function_def
+                    | return_statement
                     | class_declaration'''
     
 def p_statement_block(p):
@@ -57,6 +59,28 @@ def p_expression_minus(p):
 def p_expression_term(p):
     'expression : term'
 
+def p_function_def(p):
+    '''function_def : FUNCTION IDENTIFIER LPAREN RPAREN statement_block
+                    | FUNCTION IDENTIFIER LPAREN param_list RPAREN statement_block'''
+
+def p_param_list(p):
+    '''param_list : IDENTIFIER
+                  | IDENTIFIER COMMA param_list'''
+
+def p_return_statement(p):
+    '''return_statement : RETURN expression SEMICOLON'''
+
+def p_class_def(p):
+    'class_def : CLASS IDENTIFIER LBRACE class_body RBRACE'
+
+def p_class_body(p):
+    '''class_body : class_member
+                  | class_member class_body'''
+
+def p_class_member(p):
+    '''class_member : assignment
+                    | function_def'''
+
 def p_term_times(p):
     'term : term TIMES factor'
 
@@ -94,7 +118,10 @@ def p_expression_value(p):
     'expression : value'
     
 def p_error(p):
-    print("Syntax error in input!")
+    if p:
+        print(f"Syntax error at token '{p.value}' (type {p.type}) on line {p.lineno}")
+    else:
+        print("Syntax error at EOF")
 
 def p_print(p):
     '''print : IDENTIFIER DOT IDENTIFIER LPAREN value RPAREN SEMICOLON'''
