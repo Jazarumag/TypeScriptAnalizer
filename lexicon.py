@@ -28,7 +28,9 @@ reserved = {'let': 'LET',
             'any': 'ANY',
             'default': 'DEFAULT',
             'char': 'CHAR_TYPE',
-            'number': 'NUMBER_TYPE', 
+            'number': 'NUMBER_TYPE',
+            'print': 'PRINT',
+            'input': 'INPUT',
             'string': 'STRING_TYPE'
             }
 # List of token names
@@ -45,7 +47,7 @@ tokens = [
     'LBRACKET', 'RBRACKET',
     'SEMICOLON', 'COLON', 'COMMA',
     'ARROW', 'DOT', 'BACKTICK', 'DOLLAR', 'QUESTION',
-    'OROR', 'AND', 'NOT', 'PIPE'
+    'OR', 'AND', 'NOT', 'PIPE'
 ] + list(reserved.values())
 
 # Regular expression rules for simple tokens
@@ -76,7 +78,7 @@ t_DOT = r'\.'
 t_BACKTICK = r'`'
 t_DOLLAR = r'\$'
 t_QUESTION = r'\?'
-t_OROR = r'\|\|'
+t_OR = r'\|\|'
 t_AND = r'&&'
 t_NOT = r'!'
 t_PIPE = r'\|'
