@@ -79,6 +79,35 @@ def verificar_variables_inicializadas(data, log):
                     log.write(f"ERROR: Línea {i}: La variable '{palabra}' se usa sin haber sido inicializada\n")
                     print(f"ERROR: Línea {i}: La variable '{palabra}' se usa sin haber sido inicializada")
 
+def verificar_numero_argumentos_funcion(data, log):
+    firmas_funciones = {}
+    declaraciones = re.finditer(r'function\s+(\w+)\s*\(([^)]*)\)', data)
+    for match in declaraciones:
+        nombre_funcion = match.group(1)
+        parametros_str = match.group(2).strip()
+        num_parametros = len(parametros_str.split(',')) if parametros_str else 0
+        firmas_funciones[nombre_funcion] = num_parametros
+
+    lineas = data.splitlines()
+    for i, linea in enumerate(lineas, 1):
+        llamadas = re.finditer(r'(\w+)\s*\(([^)]*)\)', linea)
+        for match_llamada in llamadas:
+            nombre_llamada = match_llamada.group(1)
+            if nombre_llamada in firmas_funciones:
+                argumentos_str = match_llamada.group(2).strip()
+                num_argumentos = len(argumentos_str.split(',')) if argumentos_str else 0
+                num_parametros_esperados = firmas_funciones[nombre_llamada]
+                if num_argumentos != num_parametros_esperados:
+                    log.write(f"ERROR: Línea {i}: Llamada a la función '{nombre_llamada}' con {num_argumentos} argumento(s), pero se esperaban {num_parametros_esperados}\n")
+                    print(f"ERROR: Línea {i}: Llamada a la función '{nombre_llamada}' con {num_argumentos} argumento(s), pero se esperaban {num_parametros_esperados}")
+
+def verificar_division_por_cero(data, log):
+    lineas = data.splitlines()
+    for i, linea in enumerate(lineas, 1):
+        if re.search(r'/\s*0(\.0+)?\b', linea):
+            log.write(f"ERROR: Línea {i}: Se encontró una división por cero.\n")
+            print(f"ERROR: Línea {i}: Se encontró una división por cero.")
+
 def elegir_algoritmo():
     print("Selecciona el algoritmo a analizar:")
     print("1. algoritmo-1.ts")
@@ -121,5 +150,7 @@ with open(ruta_log, 'w') as log:
     verificar_redeclaracion_variables(codigo, log)
     verificar_parametros_funcion_tipados(codigo, log)
     verificar_variables_inicializadas(codigo, log)
+    verificar_numero_argumentos_funcion(codigo, log)
+    verificar_division_por_cero(codigo, log)
 
 print(f"\nLog generado: {ruta_log}")
