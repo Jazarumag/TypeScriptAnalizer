@@ -1,0 +1,6 @@
+Log semántico - Autor: Emily - 2025-06-29 23h01m43s
+==================================================
+ERROR: Línea 57: La variable 'for' se usa sin haber sido declarada
+ERROR: Línea 57: La variable 'i' se usa sin haber sido declarada
+ERROR: Línea 57: La variable 'i' se usa sin haber sido declarada
+ERROR: Línea 57: La variable 'i' se usa sin haber sido declarada

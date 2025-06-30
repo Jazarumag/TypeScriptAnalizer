@@ -1,0 +1,19 @@
+Log semántico - Autor: Emily - 2025-06-29 23h01m36s
+==================================================
+ERROR: Línea 25: La variable 'for' se usa sin haber sido declarada
+ERROR: Línea 25: La variable 'i' se usa sin haber sido declarada
+ERROR: Línea 25: La variable 'i' se usa sin haber sido declarada
+ERROR: Línea 25: La variable 'i' se usa sin haber sido declarada
+ERROR: Línea 26: La variable 'if' se usa sin haber sido declarada
+ERROR: Línea 26: La variable 'i' se usa sin haber sido declarada
+ERROR: Línea 48: La variable 'if' se usa sin haber sido declarada
+ERROR: Línea 48: La variable 'typeof' se usa sin haber sido declarada
+ERROR: Línea 48: La variable 'dato' se usa sin haber sido declarada
+ERROR: Línea 61: La variable 'this' se usa sin haber sido declarada
+ERROR: Línea 62: La variable 'this' se usa sin haber sido declarada
+ERROR: Línea 62: La variable '_stock' se usa sin haber sido declarada
+ERROR: Línea 70: La variable 'if' se usa sin haber sido declarada
+ERROR: Línea 70: La variable 'this' se usa sin haber sido declarada
+ERROR: Línea 70: La variable '_stock' se usa sin haber sido declarada
+ERROR: Línea 71: La variable 'this' se usa sin haber sido declarada
+ERROR: Línea 71: La variable '_stock' se usa sin haber sido declarada

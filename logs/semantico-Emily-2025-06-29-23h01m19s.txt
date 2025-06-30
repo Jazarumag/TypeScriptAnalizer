@@ -1,0 +1,13 @@
+Log semántico - Autor: Emily - 2025-06-29 23h01m19s
+==================================================
+ERROR: Línea 14: La variable 'this' se usa sin haber sido declarada
+ERROR: Línea 14: La variable 'name' se usa sin haber sido declarada
+ERROR: Línea 14: La variable 'name' se usa sin haber sido declarada
+ERROR: Línea 15: La variable 'this' se usa sin haber sido declarada
+ERROR: Línea 15: La variable 'age' se usa sin haber sido declarada
+ERROR: Línea 15: La variable 'age' se usa sin haber sido declarada
+ERROR: Línea 16: La variable 'this' se usa sin haber sido declarada
+ERROR: Línea 16: La variable 'grades' se usa sin haber sido declarada
+ERROR: Línea 16: La variable 'grades' se usa sin haber sido declarada
+ERROR: Línea 33: La variable 'this' se usa sin haber sido declarada
+ERROR: Línea 33: La variable 'calculateAverage' se usa sin haber sido declarada
