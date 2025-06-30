@@ -37,6 +37,48 @@ def verificar_tipo_retorno_funcion(data, log):
             log.write("ERROR: " + mensaje + "\n")
             print("ERROR: " + mensaje)
 
+def verificar_redeclaracion_variables(data, log):
+    declaradas = set()
+    for i, linea in enumerate(data.splitlines(), 1):
+        match_decl = re.match(r'\s*(let|const|var)\s+(\w+)', linea)
+        if match_decl:
+            nombre = match_decl.group(2)
+            if nombre in declaradas:
+                log.write(f"ERROR: Línea {i}: La variable '{nombre}' está redeclarada en el mismo ámbito\n")
+                print(f"ERROR: Línea {i}: La variable '{nombre}' está redeclarada en el mismo ámbito")
+            else:
+                declaradas.add(nombre)
+
+
+def verificar_parametros_funcion_tipados(data, log):
+    funciones = re.finditer(r'function\s+(\w+)\s*\(([^)]*)\)', data)
+    for match in funciones:
+        nombre = match.group(1)
+        params = match.group(2)
+        for param in params.split(','):
+            param = param.strip()
+            if param and ':' not in param:
+                log.write(f"ERROR: Función '{nombre}' tiene parámetro sin tipo declarado: '{param}'\n")
+                print(f"ERROR: Función '{nombre}' tiene parámetro sin tipo declarado: '{param}'")
+
+
+def verificar_variables_inicializadas(data, log):
+    declaradas = set()
+    inicializadas = set()
+    for i, linea in enumerate(data.splitlines(), 1):
+        match_decl = re.match(r'\s*(let|const|var)\s+(\w+)', linea)
+        if match_decl:
+            declaradas.add(match_decl.group(2))
+            if '=' in linea:
+                inicializadas.add(match_decl.group(2))
+            continue
+        palabras = re.findall(r'\b[a-zA-Z_]\w*\b', linea)
+        for palabra in palabras:
+            if palabra in declaradas and palabra not in inicializadas:
+                if '=' not in linea or palabra not in linea.split('=')[0]:
+                    log.write(f"ERROR: Línea {i}: La variable '{palabra}' se usa sin haber sido inicializada\n")
+                    print(f"ERROR: Línea {i}: La variable '{palabra}' se usa sin haber sido inicializada")
+
 def elegir_algoritmo():
     print("Selecciona el algoritmo a analizar:")
     print("1. algoritmo-1.ts")
@@ -76,5 +118,8 @@ with open(ruta_log, 'w') as log:
     log.write("=" * 50 + "\n")
     verificar_variables_declaradas(codigo, log)
     verificar_tipo_retorno_funcion(codigo, log)
+    verificar_redeclaracion_variables(codigo, log)
+    verificar_parametros_funcion_tipados(codigo, log)
+    verificar_variables_inicializadas(codigo, log)
 
 print(f"\nLog generado: {ruta_log}")
