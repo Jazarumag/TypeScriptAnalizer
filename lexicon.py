@@ -5,6 +5,8 @@ import time
 reserved = {'let': 'LET',
             'const': 'CONST',
             'var': 'VAR',
+            'true': 'TRUE',
+            'false': 'FALSE',
             'if': 'IF',
             'else':'ELSE',
             'while': 'WHILE',
@@ -29,8 +31,6 @@ reserved = {'let': 'LET',
             'default': 'DEFAULT',
             'char': 'CHAR_TYPE',
             'number': 'NUMBER_TYPE',
-            'print': 'PRINT',
-            'input': 'INPUT',
             'string': 'STRING_TYPE'
             }
 # List of token names
@@ -125,8 +125,9 @@ def t_error(t):
 lexer = lex.lex()
 
 # Test it out
+
 def elegir_algoritmo():
-    print("Selecciona el algoritmo a analizar:")
+    print("Selecciona el algoritmo a analizar (Léxico):")
     print("1. algoritmo-1.ts")
     print("2. algoritmo-2.ts")
     print("3. algoritmo-3.ts")
@@ -144,31 +145,27 @@ def elegir_autor():
     author_choice = input("Ingresa el número: ")
     authors = {"1": "Joshua", "2": "Emily", "3": "Raul"}
     return authors.get(author_choice, "general")
-
-alg_choice = elegir_algoritmo()
-author = elegir_autor()
-
-try:
-    with open(f"algoritmo-{alg_choice}.ts", "r") as file_test:
-        data = file_test.read()
-except FileNotFoundError:
-    print(f"El archivo algoritmo-{alg_choice}.ts no se encuentra en el directorio.")
-    exit()
-
-date = time.strftime("%Y-%m-%d")
-hour = time.strftime("%HH%Mm%Ss")
-file_name = f'./logs/lexico-{author}-{date}-{hour}.txt'
-
-import os
-if not os.path.exists('./logs'):
-    os.makedirs('./logs')
-
-with open(file_name, 'a') as file:
-    lexer.logfile = file
-    lexer.input(data)
-    while True:
-        tok = lexer.token()
-        if not tok:
-            break
-        print(tok)
-        file.write(str(tok) + '\n')
+if __name__ == "__main__":
+    import os
+    alg_choice = elegir_algoritmo()
+    author = elegir_autor()
+    try:
+        with open(f"algoritmo-{alg_choice}.ts", "r") as file_test:
+            data = file_test.read()
+    except FileNotFoundError:
+        print(f"El archivo algoritmo-{alg_choice}.ts no se encuentra en el directorio.")
+        exit()
+    date = time.strftime("%Y-%m-%d")
+    hour = time.strftime("%HH%Mm%Ss")
+    file_name = f'./logs/lexico-{author}-{date}-{hour}.txt'
+    if not os.path.exists('./logs'):
+        os.makedirs('./logs')
+    with open(file_name, 'a') as file:
+        lexer.logfile = file
+        lexer.input(data)
+        while True:
+            tok = lexer.token()
+            if not tok:
+                break
+            print(tok)
+            file.write(str(tok) + '\n')

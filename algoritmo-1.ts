@@ -12,7 +12,7 @@ let usuario: { id: number; nombre: string } = { id: 1, nombre: "Pedro" };
 
 // Expresiones Aritméticas y Asignaciones
 let resultado: number = (edad + precio) * 2 - 5 / 2;
-resultado += 1;
+resultado = resultado + 1;
 
 // Expresiones Booleanas y Lógicas
 let esMayor: boolean = (edad > 18) && activo;

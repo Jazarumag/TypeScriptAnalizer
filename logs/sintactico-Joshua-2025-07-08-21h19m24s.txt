@@ -1,0 +1,14 @@
+Syntax error at token '=' (type EQUALS) on line 15
+Syntax error at token '>' (type GT) on line 18
+Syntax error at token '.' (type DOT) on line 19
+Syntax error at token '.' (type DOT) on line 23
+Syntax error at token '.' (type DOT) on line 25
+Syntax error at token '+' (type PLUS) on line 25
+Syntax error at token 'switch' (type SWITCH) on line 34
+Syntax error at token '{' (type LBRACE) on line 34
+Syntax error at token ':' (type COLON) on line 43
+Syntax error at token '}' (type RBRACE) on line 45
+Syntax error at token ':' (type COLON) on line 47
+Syntax error at token ';' (type SEMICOLON) on line 57
+Syntax error at token ')' (type RPAREN) on line 70
+Syntax error at token 'Producto' (type IDENTIFIER) on line 78
