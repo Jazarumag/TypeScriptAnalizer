@@ -16,7 +16,11 @@ def p_statement(p):
                     | if_statement
                     | function_def
                     | return_statement
-                    | class_declaration'''
+                    | class_declaration
+                    | while_statement
+                    | for_statement
+                    | break_statement
+                    | continue_statement'''
 
 # Asignacion de variables
 def p_assignment(p):
@@ -28,7 +32,8 @@ def p_assignment(p):
                     | VAR IDENTIFIER EQUALS value
                     | VAR IDENTIFIER COLON data_type EQUALS value
                     | VAR IDENTIFIER COLON data_type
-                    | IDENTIFIER EQUALS value'''
+                    | IDENTIFIER EQUALS value
+                    | IDENTIFIER COLON value'''
 def p_data_type(p):
     '''data_type : STRING_TYPE
                     | NUMBER_TYPE
@@ -41,8 +46,6 @@ def p_value(p):
                 | CHARACTER
                 | array
                 | object_literal
-                | arithmetic_expression
-                | logical_expression
                 | expression'''
 
 # Arreglos
@@ -64,7 +67,7 @@ def p_object_type_literal(p):
                            | LBRACE RBRACE'''
 def p_object_literal(p):
     '''object_literal : LBRACE property_assignment_list RBRACE
-                      | LBRACE RBRACE'''
+                      '''
 # Atributos de objetos
 def p_property(p):
     '''property : IDENTIFIER COLON data_type'''
@@ -76,7 +79,8 @@ def p_property_assignment(p):
                            | STRING COLON value'''
 def p_property_list(p):
     '''property_list : property
-                     | property SEMICOLON property_list'''
+                     | property SEMICOLON property_list
+                     | property COMMA property_list'''
 
 # Operaciones matemáticas
 precedence = (
@@ -127,7 +131,6 @@ def p_logical_term(p):
                     | logical_factor'''
 def p_logical_factor(p):
     '''logical_factor : comparison_expression
-                      | IDENTIFIER
                       | TRUE
                       | FALSE
                       | LPAREN logical_expression RPAREN'''
@@ -139,11 +142,18 @@ def p_comparison_expression(p):
                              | arithmetic_expression GE arithmetic_expression
                              | arithmetic_expression LE arithmetic_expression'''
 # Acceso a propiedades y llamadas a funciones
+def p_expression(p):
+    '''expression : arithmetic_expression
+                  | logical_expression
+                  | member_access
+                  | function_call
+                  | class_instantiation
+                  | this_access'''
 def p_member_access(p):
-    '''expression : expression DOT IDENTIFIER
+    '''member_access : member_access DOT IDENTIFIER
                     | IDENTIFIER DOT IDENTIFIER'''
 def p_function_call(p):
-    '''expression : IDENTIFIER LPAREN RPAREN
+    '''function_call : IDENTIFIER LPAREN RPAREN
                   | IDENTIFIER LPAREN argument_list RPAREN'''
 def p_argument_list(p):
     '''argument_list : expression
@@ -155,46 +165,79 @@ def p_argument_list(p):
 def p_class_declaration(p):
     '''class_declaration : CLASS IDENTIFIER LBRACE class_body RBRACE'''
     pass
-
+# Instanciación de clases
+def p_class_instantiation(p):
+    '''class_instantiation : NEW IDENTIFIER LPAREN RPAREN
+                  | NEW IDENTIFIER LPAREN argument_list RPAREN'''
+# Cuerpo de la clase
 def p_class_body(p):
     '''class_body : class_member_list
                   | empty'''
     pass
-
 def p_class_member_list(p):
     '''class_member_list : class_member
                          | class_member class_member_list'''
     pass
-
 def p_class_member(p):
-    '''class_member : assignment
+    '''class_member : assignment SEMICOLON
+                    | class_property
                     | function_def
-                    | property'''
+                    | constructor
+                    '''
     pass
-    
 def p_empty(p):
     'empty :'
     pass
-
+def p_class_property(p):
+    '''class_property : IDENTIFIER COLON data_type SEMICOLON
+                      | IDENTIFIER COLON data_type EQUALS value SEMICOLON'''
+    pass
+# Constructor de clase
+def p_constructor(p):
+    '''constructor : CONSTRUCTOR LPAREN RPAREN statement_block
+                   | CONSTRUCTOR LPAREN param_list RPAREN statement_block'''
+    pass
+def p_this_assignment(p):
+    '''assignment : THIS DOT IDENTIFIER EQUALS value'''
+    pass
+def p_this_access(p):
+    '''this_access : THIS DOT IDENTIFIER
+                  | THIS'''
+    pass
+# Definición de funciones
 def p_function_def(p):
     '''function_def : FUNCTION IDENTIFIER LPAREN RPAREN statement_block
                     | FUNCTION IDENTIFIER LPAREN param_list RPAREN statement_block'''
-
+    pass
 def p_param_list(p):
     '''param_list : IDENTIFIER
-                  | IDENTIFIER COMMA param_list'''
-
+                  | IDENTIFIER COMMA param_list
+                  | IDENTIFIER COLON data_type
+                  | IDENTIFIER COLON data_type COMMA param_list'''
 def p_return_statement(p):
-    '''return_statement : RETURN expression SEMICOLON'''
-    
+    '''return_statement : RETURN expression SEMICOLON'''   
 def p_statement_block(p):
     '''statement_block : LBRACE statement_list RBRACE
                             | statement'''
 
-    
+# IF, WHILE, FOR statements
+def p_while_statement(p):
+    '''while_statement : WHILE LPAREN logical_expression RPAREN statement_block'''
+
+def p_for_statement(p):
+    '''for_statement : FOR LPAREN assignment SEMICOLON logical_expression SEMICOLON assignment RPAREN statement_block
+                        | FOR LPAREN IDENTIFIER IN expression RPAREN statement_block'''
 def p_if_statement(p):
     '''if_statement : IF LPAREN logical_expression RPAREN statement_block
                         | IF LPAREN logical_expression RPAREN statement_block ELSE statement_block'''
+
+def p_break_statement(p):
+    '''break_statement : BREAK SEMICOLON'''
+    pass
+
+def p_continue_statement(p):
+    '''continue_statement : CONTINUE SEMICOLON'''
+    pass
 
 
 # -------------------------------------- LOGS --------------------------------------

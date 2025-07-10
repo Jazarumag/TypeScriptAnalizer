@@ -31,7 +31,10 @@ reserved = {'let': 'LET',
             'default': 'DEFAULT',
             'char': 'CHAR_TYPE',
             'number': 'NUMBER_TYPE',
-            'string': 'STRING_TYPE'
+            'string': 'STRING_TYPE',
+            'in': 'IN',
+            'continue': 'CONTINUE',
+            'new': 'NEW'
             }
 # List of token names
 tokens = [

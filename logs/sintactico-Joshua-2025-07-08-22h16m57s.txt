@@ -1,4 +1,4 @@
-Syntax error at token ')' (type RPAREN) on line 1
+yntax error at token ')' (type RPAREN) on line 1
 Syntax error at token '(' (type LPAREN) on line 13
 Syntax error at token ',' (type COMMA) on line 16
 Syntax error at token '(' (type LPAREN) on line 21
