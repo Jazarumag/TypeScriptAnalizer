@@ -96,6 +96,10 @@ def t_CHARACTER(t):
 
 t_ignore  = ' \t'
 
+def t_TEMPLATE_STRING(t):
+    r'\`([^`\\]*(\\.[^`\\]*)*)\`'
+    return t
+
 def t_COMMENT(t):
     r'//.*'
     pass
@@ -115,6 +119,9 @@ lexer = lex.lex()
 # Test it out
 
 def elegir_algoritmo():
+    if len(sys.argv) >= 2:
+        return sys.argv[1]
+    
     print("Selecciona el algoritmo a analizar (Léxico):")
     print("1. algoritmo-1.ts")
     print("2. algoritmo-2.ts")
@@ -123,9 +130,11 @@ def elegir_algoritmo():
     if alg_choice not in ["1", "2", "3"]:
         print("Seleccionando default: 'algoritmo-3.ts'")
         alg_choice = "3"
-    return alg_choice
+    return f"algoritmo-{alg_choice}"
 
 def elegir_autor():
+    if len(sys.argv) >= 3:
+        return sys.argv[2]
     print("¿Quién está probando:")
     print("1. Joshua")
     print("2. Emily")
@@ -138,7 +147,7 @@ if __name__ == "__main__":
     alg_choice = elegir_algoritmo()
     author = elegir_autor()
     try:
-        with open(f"algoritmo-{alg_choice}.ts", "r") as file_test:
+        with open(f"{alg_choice}.ts", "r") as file_test:
             data = file_test.read()
     except FileNotFoundError:
         print(f"El archivo algoritmo-{alg_choice}.ts no se encuentra en el directorio.")
