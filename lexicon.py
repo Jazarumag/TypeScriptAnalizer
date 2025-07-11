@@ -11,24 +11,14 @@ reserved = {'let': 'LET',
             'else':'ELSE',
             'while': 'WHILE',
             'for': 'FOR',
-            'switch': 'SWITCH',
-            'case': 'CASE',
             'break': 'BREAK',
             'function': 'FUNCTION',
             'return': 'RETURN',
-            'void': 'VOID',
-            'type': 'TYPE',
-            'typeof': 'TYPEOF',
             'class': 'CLASS',
             'this': 'THIS',
             'constructor': 'CONSTRUCTOR',
-            'public': 'PUBLIC',
-            'private': 'PRIVATE',
-            'protected': 'PROTECTED',
-            'interface': 'INTERFACE',
             'boolean': 'BOOLEAN_TYPE',
             'any': 'ANY',
-            'default': 'DEFAULT',
             'char': 'CHAR_TYPE',
             'number': 'NUMBER_TYPE',
             'string': 'STRING_TYPE',
@@ -49,7 +39,7 @@ tokens = [
     'LBRACE', 'RBRACE',
     'LBRACKET', 'RBRACKET',
     'SEMICOLON', 'COLON', 'COMMA',
-    'ARROW', 'DOT', 'BACKTICK', 'DOLLAR', 'QUESTION',
+    'DOT', 'DOLLAR', 'QUESTION',
     'OR', 'AND', 'NOT', 'PIPE'
 ] + list(reserved.values())
 
@@ -76,15 +66,10 @@ t_RBRACKET = r'\]'
 t_SEMICOLON = r';'
 t_COLON = r':'
 t_COMMA = r','
-t_ARROW = r'=>'
 t_DOT = r'\.'
-t_BACKTICK = r'`'
-t_DOLLAR = r'\$'
-t_QUESTION = r'\?'
 t_OR = r'\|\|'
 t_AND = r'&&'
 t_NOT = r'!'
-t_PIPE = r'\|'
 
 def t_IDENTIFIER(t):
     r'[a-zA-Z_][a-zA-Z0-9_]*'
